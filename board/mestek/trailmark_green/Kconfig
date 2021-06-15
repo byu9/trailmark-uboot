@@ -1,0 +1,23 @@
+if TARGET_MESTEK_TRAILMARK_GREEN
+
+config SYS_BOARD
+	default "trailmark_green"
+
+config SYS_VENDOR
+	default "mestek"
+
+config SYS_SOC
+	default "am33xx"
+
+config SYS_CONFIG_NAME
+	default "trailmark_green"
+
+#config TRAILMARK_GREEN_FIXUP_ETH_PHYADDR
+#	bool "Fixup the Ethernet PHY address in Linux DTB"
+#	default y
+#	select OF_BOARD_SETUP
+#	select OF_CONTROL
+#	select DM_ETH
+#	select DRIVER_TI_CPSW
+
+endif

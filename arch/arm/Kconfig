@@ -13,53 +13,53 @@ if ARM64
 config POSITION_INDEPENDENT
 	bool "Generate position-independent pre-relocation code"
 	help
-	  U-Boot expects to be linked to a specific hard-coded address, and to
-	  be loaded to and run from that address. This option lifts that
-	  restriction, thus allowing the code to be loaded to and executed from
-	  almost any 4K aligned address. This logic relies on the relocation
-	  information that is embedded in the binary to support U-Boot
-	  relocating itself to the top-of-RAM later during execution.
+	U-Boot expects to be linked to a specific hard-coded address, and to
+	be loaded to and run from that address. This option lifts that
+	restriction, thus allowing the code to be loaded to and executed from
+	almost any 4K aligned address. This logic relies on the relocation
+	information that is embedded in the binary to support U-Boot
+	relocating itself to the top-of-RAM later during execution.
 
 config INIT_SP_RELATIVE
 	bool "Specify the early stack pointer relative to the .bss section"
 	default n if ARCH_QEMU
 	default y if POSITION_INDEPENDENT
 	help
-	  U-Boot typically uses a hard-coded value for the stack pointer
-	  before relocation. Enable this option to instead calculate the
-	  initial SP at run-time. This is useful to avoid hard-coding addresses
-	  into U-Boot, so that it can be loaded and executed at arbitrary
-	  addresses and thus avoid using arbitrary addresses at runtime.
+	U-Boot typically uses a hard-coded value for the stack pointer
+	before relocation. Enable this option to instead calculate the
+	initial SP at run-time. This is useful to avoid hard-coding addresses
+	into U-Boot, so that it can be loaded and executed at arbitrary
+	addresses and thus avoid using arbitrary addresses at runtime.
 
-	  If this option is enabled, the early stack pointer is set to
-	  &_bss_start with a offset value added. The offset is specified by
-	  SYS_INIT_SP_BSS_OFFSET.
+	If this option is enabled, the early stack pointer is set to
+	&_bss_start with a offset value added. The offset is specified by
+	SYS_INIT_SP_BSS_OFFSET.
 
 config SYS_INIT_SP_BSS_OFFSET
 	int "Early stack offset from the .bss base address"
 	depends on INIT_SP_RELATIVE
 	default 524288
 	help
-	  This option's value is the offset added to &_bss_start in order to
-	  calculate the stack pointer. This offset should be large enough so
-	  that the early malloc region, global data (gd), and early stack usage
-	  do not overlap any appended DTB.
+	This option's value is the offset added to &_bss_start in order to
+	calculate the stack pointer. This offset should be large enough so
+	that the early malloc region, global data (gd), and early stack usage
+	do not overlap any appended DTB.
 
 config LINUX_KERNEL_IMAGE_HEADER
 	bool
 	help
-	  Place a Linux kernel image header at the start of the U-Boot binary.
-	  The format of the header is described in the Linux kernel source at
-	  Documentation/arm64/booting.txt. This feature is useful since the
-	  image header reports the amount of memory (BSS and similar) that
-	  U-Boot needs to use, but which isn't part of the binary.
+	Place a Linux kernel image header at the start of the U-Boot binary.
+	The format of the header is described in the Linux kernel source at
+	Documentation/arm64/booting.txt. This feature is useful since the
+	image header reports the amount of memory (BSS and similar) that
+	U-Boot needs to use, but which isn't part of the binary.
 
 if LINUX_KERNEL_IMAGE_HEADER
 config LNX_KRNL_IMG_TEXT_OFFSET_BASE
 	hex
 	help
-	  The value subtracted from CONFIG_SYS_TEXT_BASE to calculate the
-	  TEXT_OFFSET value written to the Linux kernel image header.
+	The value subtracted from CONFIG_SYS_TEXT_BASE to calculate the
+	TEXT_OFFSET value written to the Linux kernel image header.
 endif
 endif
 
@@ -68,12 +68,12 @@ config GIC_V3_ITS
 	select REGMAP
 	select SYSCON
 	help
-	  ARM GICV3 Interrupt translation service (ITS).
-	  Basic support for programming locality specific peripheral
-	  interrupts (LPI) configuration tables and enable LPI tables.
-	  LPI configuration table can be used by u-boot or Linux.
-	  ARM GICV3 has limitation, once the LPI table is enabled, LPI
-	  configuration table can not be re-programmed, unless GICV3 reset.
+	ARM GICV3 Interrupt translation service (ITS).
+	Basic support for programming locality specific peripheral
+	interrupts (LPI) configuration tables and enable LPI tables.
+	LPI configuration table can be used by u-boot or Linux.
+	ARM GICV3 has limitation, once the LPI table is enabled, LPI
+	configuration table can not be re-programmed, unless GICV3 reset.
 
 config STATIC_RELA
 	bool
@@ -102,49 +102,49 @@ config SYS_ICACHE_OFF
 	bool "Do not enable icache"
 	default n
 	help
-	  Do not enable instruction cache in U-Boot.
+	Do not enable instruction cache in U-Boot.
 
 config SPL_SYS_ICACHE_OFF
 	bool "Do not enable icache in SPL"
 	depends on SPL
 	default SYS_ICACHE_OFF
 	help
-	  Do not enable instruction cache in SPL.
+	Do not enable instruction cache in SPL.
 
 config SYS_DCACHE_OFF
 	bool "Do not enable dcache"
 	default n
 	help
-	  Do not enable data cache in U-Boot.
+	Do not enable data cache in U-Boot.
 
 config SPL_SYS_DCACHE_OFF
 	bool "Do not enable dcache in SPL"
 	depends on SPL
 	default SYS_DCACHE_OFF
 	help
-	  Do not enable data cache in SPL.
+	Do not enable data cache in SPL.
 
 config SYS_ARM_CACHE_CP15
 	bool "CP15 based cache enabling support"
 	help
-	  Select this if your processor suports enabling caches by using
-	  CP15 registers.
+	Select this if your processor suports enabling caches by using
+	CP15 registers.
 
 config SYS_ARM_MMU
 	bool "MMU-based Paged Memory Management Support"
 	select SYS_ARM_CACHE_CP15
 	help
-	  Select if you want MMU-based virtualised addressing space
-	  support via paged memory management.
+	Select if you want MMU-based virtualised addressing space
+	support via paged memory management.
 
 config SYS_ARM_MPU
 	bool 'Use the ARM v7 PMSA Compliant MPU'
 	help
-	  Some ARM systems without an MMU have instead a Memory Protection
-	  Unit (MPU) that defines the type and permissions for regions of
-	  memory.
-	  If your CPU has an MPU then you should choose 'y' here unless you
-	  know that you do not want to use the MPU.
+	Some ARM systems without an MMU have instead a Memory Protection
+	Unit (MPU) that defines the type and permissions for regions of
+	memory.
+	If your CPU has an MPU then you should choose 'y' here unless you
+	know that you do not want to use the MPU.
 
 # If set, the workarounds for these ARM errata are applied early during U-Boot
 # startup. Note that in general these options force the workarounds to be
@@ -346,105 +346,105 @@ config SYS_CACHELINE_SIZE
 choice
 	prompt "Select the ARM data write cache policy"
 	default SYS_ARM_CACHE_WRITETHROUGH if TARGET_BCMCYGNUS || \
-					      TARGET_BCMNSP || CPU_PXA || RZA1
+						  TARGET_BCMNSP || CPU_PXA || RZA1
 	default SYS_ARM_CACHE_WRITEBACK
 
 config SYS_ARM_CACHE_WRITEBACK
 	bool "Write-back (WB)"
 	help
-	  A write updates the cache only and marks the cache line as dirty.
-	  External memory is updated only when the line is evicted or explicitly
-	  cleaned.
+	A write updates the cache only and marks the cache line as dirty.
+	External memory is updated only when the line is evicted or explicitly
+	cleaned.
 
 config SYS_ARM_CACHE_WRITETHROUGH
 	bool "Write-through (WT)"
 	help
-	  A write updates both the cache and the external memory system.
-	  This does not mark the cache line as dirty.
+	A write updates both the cache and the external memory system.
+	This does not mark the cache line as dirty.
 
 config SYS_ARM_CACHE_WRITEALLOC
 	bool "Write allocation (WA)"
 	help
-	  A cache line is allocated on a write miss. This means that executing a
-	  store instruction on the processor might cause a burst read to occur.
-	  There is a linefill to obtain the data for the cache line, before the
-	  write is performed.
+	A cache line is allocated on a write miss. This means that executing a
+	store instruction on the processor might cause a burst read to occur.
+	There is a linefill to obtain the data for the cache line, before the
+	write is performed.
 endchoice
 
 config ARCH_CPU_INIT
 	bool "Enable ARCH_CPU_INIT"
 	help
-	  Some architectures require a call to arch_cpu_init().
-	  Say Y here to enable it
+	Some architectures require a call to arch_cpu_init().
+	Say Y here to enable it
 
 config SYS_ARCH_TIMER
 	bool "ARM Generic Timer support"
 	depends on CPU_V7A || ARM64
 	default y if ARM64
 	help
-	  The ARM Generic Timer (aka arch-timer) provides an architected
-	  interface to a timer source on an SoC.
-	  It is mandatory for ARMv8 implementation and widely available
-	  on ARMv7 systems.
+	The ARM Generic Timer (aka arch-timer) provides an architected
+	interface to a timer source on an SoC.
+	It is mandatory for ARMv8 implementation and widely available
+	on ARMv7 systems.
 
 config ARM_SMCCC
 	bool "Support for ARM SMC Calling Convention (SMCCC)"
 	depends on CPU_V7A || ARM64
 	select ARM_PSCI_FW
 	help
-	  Say Y here if you want to enable ARM SMC Calling Convention.
-	  This should be enabled if U-Boot needs to communicate with system
-	  firmware (for example, PSCI) according to SMCCC.
+	Say Y here if you want to enable ARM SMC Calling Convention.
+	This should be enabled if U-Boot needs to communicate with system
+	firmware (for example, PSCI) according to SMCCC.
 
 config SEMIHOSTING
 	bool "support boot from semihosting"
 	help
-	  In emulated environments, semihosting is a way for
-	  the hosted environment to call out to the emulator to
-	  retrieve files from the host machine.
+	In emulated environments, semihosting is a way for
+	the hosted environment to call out to the emulator to
+	retrieve files from the host machine.
 
 config SYS_THUMB_BUILD
 	bool "Build U-Boot using the Thumb instruction set"
 	depends on !ARM64
 	help
-	   Use this flag to build U-Boot using the Thumb instruction set for
-	   ARM architectures. Thumb instruction set provides better code
-	   density. For ARM architectures that support Thumb2 this flag will
-	   result in Thumb2 code generated by GCC.
+	Use this flag to build U-Boot using the Thumb instruction set for
+	ARM architectures. Thumb instruction set provides better code
+	density. For ARM architectures that support Thumb2 this flag will
+	result in Thumb2 code generated by GCC.
 
 config SPL_SYS_THUMB_BUILD
 	bool "Build SPL using the Thumb instruction set"
 	default y if SYS_THUMB_BUILD
 	depends on !ARM64 && SPL
 	help
-	   Use this flag to build SPL using the Thumb instruction set for
-	   ARM architectures. Thumb instruction set provides better code
-	   density. For ARM architectures that support Thumb2 this flag will
-	   result in Thumb2 code generated by GCC.
+	Use this flag to build SPL using the Thumb instruction set for
+	ARM architectures. Thumb instruction set provides better code
+	density. For ARM architectures that support Thumb2 this flag will
+	result in Thumb2 code generated by GCC.
 
 config TPL_SYS_THUMB_BUILD
 	bool "Build TPL using the Thumb instruction set"
 	default y if SYS_THUMB_BUILD
 	depends on TPL && !ARM64
 	help
-	   Use this flag to build TPL using the Thumb instruction set for
-	   ARM architectures. Thumb instruction set provides better code
-	   density. For ARM architectures that support Thumb2 this flag will
-	   result in Thumb2 code generated by GCC.
+	Use this flag to build TPL using the Thumb instruction set for
+	ARM architectures. Thumb instruction set provides better code
+	density. For ARM architectures that support Thumb2 this flag will
+	result in Thumb2 code generated by GCC.
 
 
 config SYS_L2CACHE_OFF
 	bool "L2cache off"
 	help
-	  If SoC does not support L2CACHE or one does not want to enable
-	  L2CACHE, choose this option.
+	If SoC does not support L2CACHE or one does not want to enable
+	L2CACHE, choose this option.
 
 config ENABLE_ARM_SOC_BOOT0_HOOK
 	bool "prepare BOOT0 header"
 	help
-	  If the SoC's BOOT0 requires a header area filled with (magic)
-	  values, then choose this option, and create a file included as
-	  <asm/arch/boot0.h> which contains the required assembler code.
+	If the SoC's BOOT0 requires a header area filled with (magic)
+	values, then choose this option, and create a file included as
+	<asm/arch/boot0.h> which contains the required assembler code.
 
 config ARM_CORTEX_CPU_IS_UP
 	bool
@@ -455,61 +455,61 @@ config USE_ARCH_MEMCPY
 	default y
 	depends on !ARM64
 	help
-	  Enable the generation of an optimized version of memcpy.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memcpy.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config SPL_USE_ARCH_MEMCPY
 	bool "Use an assembly optimized implementation of memcpy for SPL"
 	default y if USE_ARCH_MEMCPY
 	depends on !ARM64 && SPL
 	help
-	  Enable the generation of an optimized version of memcpy.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memcpy.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config TPL_USE_ARCH_MEMCPY
 	bool "Use an assembly optimized implementation of memcpy for TPL"
 	default y if USE_ARCH_MEMCPY
 	depends on !ARM64 && TPL
 	help
-	  Enable the generation of an optimized version of memcpy.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memcpy.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config USE_ARCH_MEMSET
 	bool "Use an assembly optimized implementation of memset"
 	default y
 	depends on !ARM64
 	help
-	  Enable the generation of an optimized version of memset.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memset.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config SPL_USE_ARCH_MEMSET
 	bool "Use an assembly optimized implementation of memset for SPL"
 	default y if USE_ARCH_MEMSET
 	depends on !ARM64 && SPL
 	help
-	  Enable the generation of an optimized version of memset.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memset.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config TPL_USE_ARCH_MEMSET
 	bool "Use an assembly optimized implementation of memset for TPL"
 	default y if USE_ARCH_MEMSET
 	depends on !ARM64 && TPL
 	help
-	  Enable the generation of an optimized version of memset.
-	  Such an implementation may be faster under some conditions
-	  but may increase the binary size.
+	Enable the generation of an optimized version of memset.
+	Such an implementation may be faster under some conditions
+	but may increase the binary size.
 
 config ARM64_SUPPORT_AARCH32
 	bool "ARM64 system support AArch32 execution state"
 	depends on ARM64
 	default y if !TARGET_THUNDERX_88XX
 	help
-	  This ARM64 system supports AArch32 execution state.
+	This ARM64 system supports AArch32 execution state.
 
 choice
 	prompt "Target select"
@@ -539,7 +539,7 @@ config ARCH_DAVINCI
 	select SPL_DM_SPI if SPL
 	imply CMD_SAVES
 	help
-	  Support for TI's DaVinci platform.
+	Support for TI's DaVinci platform.
 
 config ARCH_KIRKWOOD
 	bool "Marvell Kirkwood"
@@ -665,8 +665,8 @@ config ARCH_BCMSTB
 	select OF_PRIOR_STAGE
 	imply CMD_DM
 	help
-	  This enables support for Broadcom ARM-based set-top box
-	  chipsets, including the 7445 family of chips.
+	This enables support for Broadcom ARM-based set-top box
+	chipsets, including the 7445 family of chips.
 
 config TARGET_VEXPRESS_CA5X2
 	bool "Support vexpress_ca5x2"
@@ -709,18 +709,18 @@ config TARGET_BCMNS2
 	bool "Support Broadcom Northstar2"
 	select ARM64
 	help
-	  Support for Broadcom Northstar 2 SoCs.  NS2 is a quad-core 64-bit
-	  ARMv8 Cortex-A57 processors targeting a broad range of networking
-	  applications.
+	Support for Broadcom Northstar 2 SoCs.  NS2 is a quad-core 64-bit
+	ARMv8 Cortex-A57 processors targeting a broad range of networking
+	applications.
 
 config TARGET_BCMNS3
 	bool "Support Broadcom NS3"
 	select ARM64
 	select BOARD_LATE_INIT
 	help
-	  Support for Broadcom Northstar 3 SoCs. NS3 is a octo-core 64-bit
-	  ARMv8 Cortex-A72 processors targeting a broad range of networking
-	  applications.
+	Support for Broadcom Northstar 3 SoCs. NS3 is a octo-core 64-bit
+	ARMv8 Cortex-A72 processors targeting a broad range of networking
+	applications.
 
 config ARCH_EXYNOS
 	bool "Samsung EXYNOS"
@@ -802,9 +802,9 @@ config ARCH_MESON
 	imply DISTRO_DEFAULTS
 	imply DM_RNG
 	help
-	  Support for the Meson SoC family developed by Amlogic Inc.,
-	  targeted at media players and tablet computers. We currently
-	  support the S905 (GXBaby) 64-bit SoC.
+	Support for the Meson SoC family developed by Amlogic Inc.,
+	targeted at media players and tablet computers. We currently
+	support the S905 (GXBaby) 64-bit SoC.
 
 config ARCH_MEDIATEK
 	bool "MediaTek SoCs"
@@ -816,8 +816,8 @@ config ARCH_MEDIATEK
 	select SPL_OF_CONTROL if SPL
 	select SUPPORT_SPL
 	help
-	  Support for the MediaTek SoCs family developed by MediaTek Inc.
-	  Please refer to doc/README.mediatek for more information.
+	Support for the MediaTek SoCs family developed by MediaTek Inc.
+	Please refer to doc/README.mediatek for more information.
 
 config ARCH_LPC32XX
 	bool "NXP LPC32xx platform"
@@ -1216,10 +1216,10 @@ config TARGET_LS2080A_EMU
 	select ARMV8_MULTIENTRY
 	select FSL_DDR_SYNC_REFRESH
 	help
-	  Support for Freescale LS2080A_EMU platform.
-	  The LS2080A Development System (EMULATOR) is a pre-silicon
-	  development platform that supports the QorIQ LS2080A
-	  Layerscape Architecture processor.
+	Support for Freescale LS2080A_EMU platform.
+	The LS2080A Development System (EMULATOR) is a pre-silicon
+	development platform that supports the QorIQ LS2080A
+	Layerscape Architecture processor.
 
 config TARGET_LS1088AQDS
 	bool "Support ls1088aqds"
@@ -1231,10 +1231,10 @@ config TARGET_LS1088AQDS
 	select SUPPORT_SPL
 	select FSL_DDR_INTERACTIVE if !SD_BOOT
 	help
-	  Support for NXP LS1088AQDS platform.
-	  The LS1088A Development System (QDS) is a high-performance
-	  development platform that supports the QorIQ LS1088A
-	  Layerscape Architecture processor.
+	Support for NXP LS1088AQDS platform.
+	The LS1088A Development System (QDS) is a high-performance
+	development platform that supports the QorIQ LS1088A
+	Layerscape Architecture processor.
 
 config TARGET_LS2080AQDS
 	bool "Support ls2080aqds"
@@ -1249,10 +1249,10 @@ config TARGET_LS2080AQDS
 	select FSL_DDR_BIST
 	select FSL_DDR_INTERACTIVE if !SPL
 	help
-	  Support for Freescale LS2080AQDS platform.
-	  The LS2080A Development System (QDS) is a high-performance
-	  development platform that supports the QorIQ LS2080A
-	  Layerscape Architecture processor.
+	Support for Freescale LS2080AQDS platform.
+	The LS2080A Development System (QDS) is a high-performance
+	development platform that supports the QorIQ LS2080A
+	Layerscape Architecture processor.
 
 config TARGET_LS2080ARDB
 	bool "Support ls2080ardb"
@@ -1267,10 +1267,10 @@ config TARGET_LS2080ARDB
 	imply SCSI
 	imply SCSI_AHCI
 	help
-	  Support for Freescale LS2080ARDB platform.
-	  The LS2080A Reference design board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS2080A
-	  Layerscape Architecture processor.
+	Support for Freescale LS2080ARDB platform.
+	The LS2080A Reference design board (RDB) is a high-performance
+	development platform that supports the QorIQ LS2080A
+	Layerscape Architecture processor.
 
 config TARGET_LS2081ARDB
 	bool "Support ls2081ardb"
@@ -1280,10 +1280,10 @@ config TARGET_LS2081ARDB
 	select BOARD_LATE_INIT
 	select SUPPORT_SPL
 	help
-	  Support for Freescale LS2081ARDB platform.
-	  The LS2081A Reference design board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS2081A/LS2041A
-	  Layerscape Architecture processor.
+	Support for Freescale LS2081ARDB platform.
+	The LS2081A Reference design board (RDB) is a high-performance
+	development platform that supports the QorIQ LS2081A/LS2041A
+	Layerscape Architecture processor.
 
 config TARGET_LX2160ARDB
 	bool "Support lx2160ardb"
@@ -1293,10 +1293,10 @@ config TARGET_LX2160ARDB
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for NXP LX2160ARDB platform.
-	  The lx2160ardb (LX2160A Reference design board (RDB)
-	  is a high-performance development platform that supports the
-	  QorIQ LX2160A/LX2120A/LX2080A Layerscape Architecture processor.
+	Support for NXP LX2160ARDB platform.
+	The lx2160ardb (LX2160A Reference design board (RDB)
+	is a high-performance development platform that supports the
+	QorIQ LX2160A/LX2120A/LX2080A Layerscape Architecture processor.
 
 config TARGET_LX2160AQDS
 	bool "Support lx2160aqds"
@@ -1306,10 +1306,10 @@ config TARGET_LX2160AQDS
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for NXP LX2160AQDS platform.
-	  The lx2160aqds (LX2160A QorIQ Development System (QDS)
-	  is a high-performance development platform that supports the
-	  QorIQ LX2160A/LX2120A/LX2080A Layerscape Architecture processor.
+	Support for NXP LX2160AQDS platform.
+	The lx2160aqds (LX2160A QorIQ Development System (QDS)
+	is a high-performance development platform that supports the
+	QorIQ LX2160A/LX2120A/LX2080A Layerscape Architecture processor.
 
 config TARGET_LX2162AQDS
 	bool "Support lx2162aqds"
@@ -1320,8 +1320,8 @@ config TARGET_LX2162AQDS
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for NXP LX2162AQDS platform.
-	  The lx2162aqds support is based on LX2160A Layerscape Architecture processor.
+	Support for NXP LX2162AQDS platform.
+	The lx2162aqds support is based on LX2160A Layerscape Architecture processor.
 
 config TARGET_HIKEY
 	bool "Support HiKey 96boards Consumer Edition Platform"
@@ -1333,9 +1333,9 @@ config TARGET_HIKEY
 	select PL01X_SERIAL
 	select SPECIFY_CONSOLE_INDEX
 	imply CMD_DM
-	  help
-	  Support for HiKey 96boards platform. It features a HI6220
-	  SoC, with 8xA53 CPU, mali450 gpu, and 1GB RAM.
+	help
+	Support for HiKey 96boards platform. It features a HI6220
+	SoC, with 8xA53 CPU, mali450 gpu, and 1GB RAM.
 
 config TARGET_HIKEY960
 	bool "Support HiKey960 96boards Consumer Edition Platform"
@@ -1345,9 +1345,9 @@ config TARGET_HIKEY960
 	select OF_CONTROL
 	select PL01X_SERIAL
 	imply CMD_DM
-	  help
-	  Support for HiKey960 96boards platform. It features a HI3660
-	  SoC, with 4xA73 CPU, 4xA53 CPU, MALI-G71 GPU, and 3GB RAM.
+	help
+	Support for HiKey960 96boards platform. It features a HI3660
+	SoC, with 4xA73 CPU, 4xA53 CPU, MALI-G71 GPU, and 3GB RAM.
 
 config TARGET_POPLAR
 	bool "Support Poplar 96boards Enterprise Edition Platform"
@@ -1358,11 +1358,11 @@ config TARGET_POPLAR
 	select OF_CONTROL
 	select PL01X_SERIAL
 	imply CMD_DM
-	  help
-	  Support for Poplar 96boards EE platform. It features a HI3798cv200
-	  SoC, with 4xA53 CPU, 1GB RAM and the high performance Mali T720 GPU
-	  making it capable of running any commercial set-top solution based on
-	  Linux or Android.
+	help
+	Support for Poplar 96boards EE platform. It features a HI3798cv200
+	SoC, with 4xA53 CPU, 1GB RAM and the high performance Mali T720 GPU
+	making it capable of running any commercial set-top solution based on
+	Linux or Android.
 
 config TARGET_LS1012AQDS
 	bool "Support ls1012aqds"
@@ -1371,10 +1371,10 @@ config TARGET_LS1012AQDS
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for Freescale LS1012AQDS platform.
-	  The LS1012A Development System (QDS) is a high-performance
-	  development platform that supports the QorIQ LS1012A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1012AQDS platform.
+	The LS1012A Development System (QDS) is a high-performance
+	development platform that supports the QorIQ LS1012A
+	Layerscape Architecture processor.
 
 config TARGET_LS1012ARDB
 	bool "Support ls1012ardb"
@@ -1385,10 +1385,10 @@ config TARGET_LS1012ARDB
 	imply SCSI
 	imply SCSI_AHCI
 	help
-	  Support for Freescale LS1012ARDB platform.
-	  The LS1012A Reference design board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS1012A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1012ARDB platform.
+	The LS1012A Reference design board (RDB) is a high-performance
+	development platform that supports the QorIQ LS1012A
+	Layerscape Architecture processor.
 
 config TARGET_LS1012A2G5RDB
 	bool "Support ls1012a2g5rdb"
@@ -1398,10 +1398,10 @@ config TARGET_LS1012A2G5RDB
 	select BOARD_LATE_INIT
 	imply SCSI
 	help
-	  Support for Freescale LS1012A2G5RDB platform.
-	  The LS1012A 2G5 Reference design board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS1012A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1012A2G5RDB platform.
+	The LS1012A 2G5 Reference design board (RDB) is a high-performance
+	development platform that supports the QorIQ LS1012A
+	Layerscape Architecture processor.
 
 config TARGET_LS1012AFRWY
 	bool "Support ls1012afrwy"
@@ -1412,10 +1412,10 @@ config TARGET_LS1012AFRWY
 	imply SCSI
 	imply SCSI_AHCI
 	help
-	 Support for Freescale LS1012AFRWY platform.
-	 The LS1012A FRWY board (FRWY) is a high-performance
-	 development platform that supports the QorIQ LS1012A
-	 Layerscape Architecture processor.
+	Support for Freescale LS1012AFRWY platform.
+	The LS1012A FRWY board (FRWY) is a high-performance
+	development platform that supports the QorIQ LS1012A
+	Layerscape Architecture processor.
 
 config TARGET_LS1012AFRDM
 	bool "Support ls1012afrdm"
@@ -1423,10 +1423,10 @@ config TARGET_LS1012AFRDM
 	select ARM64
 	select ARCH_SUPPORT_TFABOOT
 	help
-	  Support for Freescale LS1012AFRDM platform.
-	  The LS1012A Freedom  board (FRDM) is a high-performance
-	  development platform that supports the QorIQ LS1012A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1012AFRDM platform.
+	The LS1012A Freedom  board (FRDM) is a high-performance
+	development platform that supports the QorIQ LS1012A
+	Layerscape Architecture processor.
 
 config TARGET_LS1028AQDS
 	bool "Support ls1028aqds"
@@ -1436,10 +1436,10 @@ config TARGET_LS1028AQDS
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for Freescale LS1028AQDS platform
-	  The LS1028A Development System (QDS) is a high-performance
-	  development platform that supports the QorIQ LS1028A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1028AQDS platform
+	The LS1028A Development System (QDS) is a high-performance
+	development platform that supports the QorIQ LS1028A
+	Layerscape Architecture processor.
 
 config TARGET_LS1028ARDB
 	bool "Support ls1028ardb"
@@ -1449,10 +1449,10 @@ config TARGET_LS1028ARDB
 	select ARCH_SUPPORT_TFABOOT
 	select BOARD_LATE_INIT
 	help
-	  Support for Freescale LS1028ARDB platform
-	  The LS1028A Development System (RDB) is a high-performance
-	  development platform that supports the QorIQ LS1028A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1028ARDB platform
+	The LS1028A Development System (RDB) is a high-performance
+	development platform that supports the QorIQ LS1028A
+	Layerscape Architecture processor.
 
 config TARGET_LS1088ARDB
 	bool "Support ls1088ardb"
@@ -1464,10 +1464,10 @@ config TARGET_LS1088ARDB
 	select SUPPORT_SPL
 	select FSL_DDR_INTERACTIVE if !SD_BOOT
 	help
-	  Support for NXP LS1088ARDB platform.
-	  The LS1088A Reference design board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS1088A
-	  Layerscape Architecture processor.
+	Support for NXP LS1088ARDB platform.
+	The LS1088A Reference design board (RDB) is a high-performance
+	development platform that supports the QorIQ LS1088A
+	Layerscape Architecture processor.
 
 config TARGET_LS1021AQDS
 	bool "Support ls1021aqds"
@@ -1525,10 +1525,10 @@ config TARGET_LS1021AIOT
 	select DM_SPI_FLASH if FSL_DSPI || FSL_QSPI
 	imply SCSI
 	help
-	  Support for Freescale LS1021AIOT platform.
-	  The LS1021A Freescale board (IOT) is a high-performance
-	  development platform that supports the QorIQ LS1021A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1021AIOT platform.
+	The LS1021A Freescale board (IOT) is a high-performance
+	development platform that supports the QorIQ LS1021A
+	Layerscape Architecture processor.
 
 config TARGET_LS1043AQDS
 	bool "Support ls1043aqds"
@@ -1545,7 +1545,7 @@ config TARGET_LS1043AQDS
 	imply SCSI
 	imply SCSI_AHCI
 	help
-	  Support for Freescale LS1043AQDS platform.
+	Support for Freescale LS1043AQDS platform.
 
 config TARGET_LS1043ARDB
 	bool "Support ls1043ardb"
@@ -1559,7 +1559,7 @@ config TARGET_LS1043ARDB
 	select FSL_DSPI if !SPL_NO_DSPI
 	select DM_SPI_FLASH if FSL_DSPI
 	help
-	  Support for Freescale LS1043ARDB platform.
+	Support for Freescale LS1043ARDB platform.
 
 config TARGET_LS1046AQDS
 	bool "Support ls1046aqds"
@@ -1576,10 +1576,10 @@ config TARGET_LS1046AQDS
 	select FSL_DDR_INTERACTIVE if !SPL
 	imply SCSI
 	help
-	  Support for Freescale LS1046AQDS platform.
-	  The LS1046A Development System (QDS) is a high-performance
-	  development platform that supports the QorIQ LS1046A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1046AQDS platform.
+	The LS1046A Development System (QDS) is a high-performance
+	development platform that supports the QorIQ LS1046A
+	Layerscape Architecture processor.
 
 config TARGET_LS1046ARDB
 	bool "Support ls1046ardb"
@@ -1596,10 +1596,10 @@ config TARGET_LS1046ARDB
 	select FSL_DDR_INTERACTIVE if !SPL
 	imply SCSI
 	help
-	  Support for Freescale LS1046ARDB platform.
-	  The LS1046A Reference Design Board (RDB) is a high-performance
-	  development platform that supports the QorIQ LS1046A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1046ARDB platform.
+	The LS1046A Reference Design Board (RDB) is a high-performance
+	development platform that supports the QorIQ LS1046A
+	Layerscape Architecture processor.
 
 config TARGET_LS1046AFRWY
 	bool "Support ls1046afrwy"
@@ -1612,10 +1612,10 @@ config TARGET_LS1046AFRWY
 	select DM_SPI_FLASH if DM_SPI
 	imply SCSI
 	help
-	  Support for Freescale LS1046AFRWY platform.
-	  The LS1046A Freeway Board (FRWY) is a high-performance
-	  development platform that supports the QorIQ LS1046A
-	  Layerscape Architecture processor.
+	Support for Freescale LS1046AFRWY platform.
+	The LS1046A Freeway Board (FRWY) is a high-performance
+	development platform that supports the QorIQ LS1046A
+	Layerscape Architecture processor.
 
 config TARGET_SL28
 	bool "Support sl28"
@@ -1625,7 +1625,7 @@ config TARGET_SL28
 	select SUPPORT_SPL
 	select BINMAN
 	help
-	  Support for Kontron SMARC-sAL28 board.
+	Support for Kontron SMARC-sAL28 board.
 
 config TARGET_COLIBRI_PXA270
 	bool "Support colibri_pxa270"
@@ -1658,8 +1658,8 @@ config ARCH_UNIPHIER
 	imply DISTRO_DEFAULTS
 	imply FAT_WRITE
 	help
-	  Support for UniPhier SoC family developed by Socionext Inc.
-	  (formerly, System LSI Business Division of Panasonic Corporation)
+	Support for UniPhier SoC family developed by Socionext Inc.
+	(formerly, System LSI Business Division of Panasonic Corporation)
 
 config ARCH_STM32
 	bool "Support STMicroelectronics STM32 MCU with cortex M"
@@ -1678,8 +1678,8 @@ config ARCH_STI
 	select DM_SERIAL
 	imply CMD_DM
 	help
-	  Support for STMicroelectronics STiH407/10 SoC family.
-	  This SoC is used on Linaro 96Board STiH410-B2260
+	Support for STMicroelectronics STiH407/10 SoC family.
+	This SoC is used on Linaro 96Board STiH410-B2260
 
 config ARCH_STM32MP
 	bool "Support STMicroelectronics STM32MP Socs with cortex A"
@@ -1708,12 +1708,12 @@ config ARCH_STM32MP
 	imply ENV_VARS_UBOOT_RUNTIME_CONFIG
 	imply USE_PREBOOT
 	help
-	  Support for STM32MP SoC family developed by STMicroelectronics,
-	  MPUs based on ARM cortex A core
-	  U-BOOT is running in DDR, loaded by the First Stage BootLoader (FSBL).
-	  FSBL can be TF-A: Trusted Firmware for Cortex A, for trusted boot
-	  chain.
-	  SPL is the unsecure FSBL for the basic boot chain.
+	Support for STM32MP SoC family developed by STMicroelectronics,
+	MPUs based on ARM cortex A core
+	U-BOOT is running in DDR, loaded by the First Stage BootLoader (FSBL).
+	FSBL can be TF-A: Trusted Firmware for Cortex A, for trusted boot
+	chain.
+	SPL is the unsecure FSBL for the basic boot chain.
 
 config ARCH_ROCKCHIP
 	bool "Support Rockchip SoCs"
@@ -1786,8 +1786,8 @@ config TARGET_DURIAN
 	bool "Support Phytium Durian Platform"
 	select ARM64
 	help
-	  Support for durian platform.
-	  It has 2GB Sdram, uart and pcie.
+	Support for durian platform.
+	It has 2GB Sdram, uart and pcie.
 
 config TARGET_PRESIDIO_ASIC
 	bool "Support Cortina Presidio ASIC Platform"
@@ -1811,23 +1811,23 @@ config TFABOOT
 	depends on ARCH_SUPPORT_TFABOOT
 	default n
 	help
-	  Some platforms support the setup of secure registers (for instance
-	  for CPU errata handling) or provide secure services like PSCI.
-	  Those services could also be provided by other firmware parts
-	  like TF-A (Trusted Firmware for Cortex-A), in which case U-Boot
-	  does not need to (and cannot) execute this code.
-	  Enabling this option will make a U-Boot binary that is relying
-	  on other firmware layers to provide secure functionality.
+	Some platforms support the setup of secure registers (for instance
+	for CPU errata handling) or provide secure services like PSCI.
+	Those services could also be provided by other firmware parts
+	like TF-A (Trusted Firmware for Cortex-A), in which case U-Boot
+	does not need to (and cannot) execute this code.
+	Enabling this option will make a U-Boot binary that is relying
+	on other firmware layers to provide secure functionality.
 
 config TI_SECURE_DEVICE
 	bool "HS Device Type Support"
 	depends on ARCH_KEYSTONE || ARCH_OMAP2PLUS || ARCH_K3
 	help
-	  If a high secure (HS) device type is being used, this config
-	  must be set. This option impacts various aspects of the
-	  build system (to create signed boot images that can be
-	  authenticated) and the code. See the doc/README.ti-secure
-	  file for further details.
+	If a high secure (HS) device type is being used, this config
+	must be set. This option impacts various aspects of the
+	build system (to create signed boot images that can be
+	authenticated) and the code. See the doc/README.ti-secure
+	file for further details.
 
 if AM43XX || AM33XX || OMAP54XX || ARCH_KEYSTONE
 config ISW_ENTRY_ADDR
@@ -1836,12 +1836,12 @@ config ISW_ENTRY_ADDR
 	default 0x402F0400 if AM33XX
 	default 0x40301350 if OMAP54XX
 	help
-	  After any reset, the boot ROM searches the boot media for a valid
-	  boot image. For non-XIP devices, the ROM then copies the image into
-	  internal memory. For all boot modes, after the ROM processes the
-	  boot image it eventually computes the entry point address depending
-	  on the device type (secure/non-secure), boot media (xip/non-xip) and
-	  image headers.
+	After any reset, the boot ROM searches the boot media for a valid
+	boot image. For non-XIP devices, the ROM then copies the image into
+	internal memory. For all boot modes, after the ROM processes the
+	boot image it eventually computes the entry point address depending
+	on the device type (secure/non-secure), boot media (xip/non-xip) and
+	image headers.
 endif
 
 source "arch/arm/mach-aspeed/Kconfig"
@@ -1998,6 +1998,7 @@ source "board/freescale/ls1012ardb/Kconfig"
 source "board/freescale/ls1012afrdm/Kconfig"
 source "board/freescale/lx2160a/Kconfig"
 source "board/freescale/s32v234evb/Kconfig"
+source "board/mestek/trailmark_green/Kconfig"
 source "board/grinn/chiliboard/Kconfig"
 source "board/hisilicon/hikey/Kconfig"
 source "board/hisilicon/hikey960/Kconfig"
