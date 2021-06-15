@@ -1,0 +1,5 @@
+TRAILMARK GREEN BOARD
+M:	John Yu <jyu@mestek.com>/
+S:  Orphan
+F:  board/mestek/trailmark-green/trailmark-green.c
+F:  configs/trailmark_green_defconfig
