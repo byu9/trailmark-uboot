@@ -64,7 +64,11 @@ config TARGET_AM335X_EVM
 
 config TARGET_AM335X_TRAILMARK_GREEN
 	bool "Support am335x_trailmark_green"
-
+	select OF_BOARD_SETUP
+	select OF_LIBFDT
+	select NET
+	select NETDEVICES
+	select DRIVER_TI_CPSW
 
 config TARGET_AM335X_BALTOS
 	bool "Support am335x_baltos"
