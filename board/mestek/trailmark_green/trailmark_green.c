@@ -301,11 +301,3 @@ int ft_board_setup(void *device_tree, struct bd_info *board_info)
 	return 0;
 }
 
-
-#ifdef CONFIG_BOARD_LATE_INIT
-int board_late_init(void)
-{
-	return 0;
-}
-#endif
-
