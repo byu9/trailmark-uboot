@@ -1,0 +1,35 @@
+env_addr=0x84000000
+env_file=/boot/uEnv.txt
+
+load_env=load mmc ${boot_source} ${env_addr} ${env_file}
+load_kernel=load mmc ${boot_source} ${kernel_addr} ${kernel_file}
+load_fdt=load mmc ${boot_source} ${fdt_addr} ${fdt_file}
+load_rd=load mmc ${boot_source} ${rd_addr} ${rd_file}
+
+mmc_boot=\
+if run load_env; then \
+	echo Found ${env_file} in mmc ${boot_source}; \
+	env import -t ${env_addr} ${filesize}; \
+	setenv bootargs "root=${cmdline_root} ${cmdline_extra}"; \
+	run load_kernel; \
+	run load_fdt; \
+	if run load_rd; then \
+		bootz ${kernel_addr} ${rd_addr} ${fdt_addr}; \
+	else \
+		bootz ${kernel_addr} - ${fdt_addr}; \
+	fi; \
+fi;
+
+bootcmd=\
+boot_source=0:1; \
+cmdline_root=/dev/mmcblk0p1; \
+run mmc_boot; \
+boot_source=0:2; \
+cmdline_root=/dev/mmcblk0p2; \
+run mmc_boot; \
+boot_source=1:1; \
+cmdline_root=/dev/mmcblk1p1; \
+run mmc_boot; \
+boot_source=1:2; \
+cmdline_root=/dev/mmcblk0p1; \
+run mmc_boot;
