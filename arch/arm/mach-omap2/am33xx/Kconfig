@@ -71,6 +71,9 @@ config TARGET_AM335X_BALTOS
 	select DM_SERIAL
 	imply CMD_DM
 
+config TARGET_MESTEK_TRAILMARK_GREEN
+    bool "Support trailmark_green"
+
 config TARGET_AM335X_IGEP003X
 	bool "Support am335x_igep003x"
 	select BOARD_LATE_INIT
