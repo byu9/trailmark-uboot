@@ -89,3 +89,7 @@
 	status = "okay";
 };
 
+&lcdc {
+	status = "okay";
+};
+
